@@ -47,6 +47,7 @@ def addorg():
 #home
 @app.route("/home")
 def home():
+    flash("john", "cena")
     return render_template("home.html")
 
 #results

@@ -2,9 +2,11 @@
 {% block flash%}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
+        alert(
             {% for msg in messages %}
-                <p>{{msg}}</p>
+               msg 
             {% endfor %}
+        )
         {% endif %}
     {% endwith %}
 {%endblock%}
