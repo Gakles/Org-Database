@@ -25,10 +25,10 @@ body {
 }
 .center-div {
 	width: 95%;
-	height: 90%;
+	height: 85%;
 	background-color: blanchedalmond;
 	position: absolute;
-	top: 50%;
+	top: 55%;
 	left: 50%;
 	transform: translate(-50%, -50%);
   }

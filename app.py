@@ -16,6 +16,7 @@ def setup():
 #home
 @app.route("/")
 def home():
+    flash("john", "cena")
     return render_template("home.html")
 
 #login
@@ -43,12 +44,6 @@ def addorg():
     else:
         flash("Please login", "Error")
         return redirect(url_for("login"))
-
-#home
-@app.route("/home")
-def home():
-    flash("john", "cena")
-    return render_template("home.html")
 
 #results
 @app.route("/results", methods = ["GET", "POST"])
