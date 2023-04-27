@@ -7,6 +7,8 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="/static/style/style.css">
+	{%block style%}
+	{%endblock%}
 </head>
 <body>
 	<nav class="navbar">
@@ -20,7 +22,8 @@
 		</div>
 	</nav>
     <div class="center-div">
-
+		{%block centerdiv%}
+		{%endblock%}
 	</div>
 	{%block flash%}
 	{%endblock%}

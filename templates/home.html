@@ -1,4 +1,96 @@
 {% extends "base.html"%}
+<!--Style-->
+{%block style%}
+<link rel="stylesheet" href="/static/style/homestyle.css">
+{%endblock%}
+{%block centerdiv%}
+<!--Basic search-->
+<div class="container">
+    <div class="search-box">
+      <h2>Search by name</h2>
+      <form>
+        <input type="text" placeholder="Enter name">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+<div class="divider"></div>
+<!--Advanced search-->
+
+<form class="split-container">
+    <div class="left-column">
+      <h2>Filters</h2>
+      <label>
+        <input type="checkbox" name="filter1" value="1">
+        Filter 1
+      </label>
+      <label>
+        <input type="checkbox" name="filter2" value="2">
+        Filter 2
+      </label>
+      <label>
+        <input type="checkbox" name="filter3" value="3">
+        Filter 3
+      </label>
+      <label>
+        <input type="checkbox" name="filter4" value="4">
+        Filter 4
+      </label>
+      <label>
+        <input type="checkbox" name="filter5" value="5">
+        Filter 5
+      </label>
+      <label>
+        <input type="checkbox" name="filter6" value="6">
+        Filter 6
+      </label>
+      <label>
+        <input type="checkbox" name="filter7" value="7">
+        Filter 7
+      </label>
+      <label>
+        <input type="checkbox" name="filter8" value="8">
+        Filter 8
+      </label>
+      <label>
+        <input type="checkbox" name="filter9" value="9">
+        Filter 9
+      </label>
+      <label>
+        <input type="checkbox" name="filter10" value="10">
+        Filter 10
+      </label>
+    </div>
+    <div class="right-column">
+      <h2>Options</h2>
+      <label>
+        Dropdown 1:
+        <select name="dropdown1">
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </label>
+      <label>
+        Dropdown 2:
+        <select name="dropdown2">
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </label>
+      <label>
+        Text input:
+        <input type="text" name="textinput">
+      </label>
+    </div>
+    <div class = "bottom-submit">
+    <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+{%endblock%}
 {% block flash%}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
