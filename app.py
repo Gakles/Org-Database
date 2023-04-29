@@ -36,6 +36,12 @@ def login():
         flash("Welcome " + session("username"), "welcome")
         return redirect(url_for("addorg"))
 
+#signup
+@app.route("/signup", methods = ["GET", "POST"])
+def signup():
+    if request.method == "GET":
+        return render_template("signup.html")
+
 #addorg
 @app.route("/addorg")
 def addorg():
