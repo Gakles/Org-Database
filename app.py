@@ -9,9 +9,7 @@ app.secret_key = "The geopolitical consequences OPEC's latest announcement are f
 
 # TODO: Fill in methods and routes
 
-@app.before_first_request
-def setup():
-    init_db()
+
 
 #home
 @app.route("/")
@@ -43,15 +41,21 @@ def signup():
         return render_template("signup.html")
 
 #addorg
-@app.route("/addorg")
+@app.route("/addorg", methods = ["POST", "GET"])
 def addorg():
     #remember to get rid of this once login stuff starts working
-    session["logged_in"] = True
-    if session.get("logged_in"):
+    if request.method == "GET":
+        session["logged_in"] = True
+        if session.get("logged_in"):
+            return render_template("orgbuilder.html")
+        else:
+            flash("Please login", "Error")
+            return redirect(url_for("login"))
+    elif request.method == "POST":
+        orgname = request.form["organization-name"]
+        orgdesc = request.form["organization-description"]
+        print(orgname + " " + orgdesc)
         return render_template("orgbuilder.html")
-    else:
-        flash("Please login", "Error")
-        return redirect(url_for("login"))
 
 #results
 @app.route("/results", methods = ["GET", "POST"])
@@ -65,4 +69,5 @@ def results():
         return render_template("results.html")
 
 if __name__ == "__main__":
+    init_db()
     app.run(debug=True)

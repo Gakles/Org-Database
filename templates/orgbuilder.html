@@ -5,7 +5,7 @@
 {%endblock%}
 {%block centerdiv%}
 <div class="container">
-    <form>
+    <form action = '#' method = "POST">
         <div class="card p-4">
             <h2 class="mb-4 text-center">Create Organization</h2>
             <div class = "split-container">
@@ -13,55 +13,43 @@
                     <h2 class="text-center">Tags</h2>
                     <div class="checkbox-container">
                         <label>
-                            <input type="checkbox" name="filter1" value="1">
-                            Filter 1
+                            <input type="checkbox" name="mentalHealth" value="True">
+                            Mental Health
                         </label>
                         <label>
-                            <input type="checkbox" name="filter2" value="2">
-                            Filter 2
+                            <input type="checkbox" name="housing" value="True">
+                            Housing
                         </label>
                         <label>
-                            <input type="checkbox" name="filter3" value="3">
-                            Filter 3
+                            <input type="checkbox" name="environment" value="True">
+                            Environment
                         </label>
                         <label>
-                            <input type="checkbox" name="filter4" value="4">
-                            Filter 4
+                            <input type="checkbox" name="addictionRecovery" value="True">
+                            Addiction & Recovery
                         </label>
                         <label>
-                            <input type="checkbox" name="filter5" value="5">
-                            Filter 5
+                            <input type="checkbox" name="elderCare" value="True">
+                            Elder Care
                         </label>
                         <label>
-                            <input type="checkbox" name="filter6" value="6">
-                            Filter 6
+                            <input type="checkbox" name="foodSecurity" value="True">
+                            Food Security
                         </label>
                         <label>
-                            <input type="checkbox" name="filter7" value="7">
-                            Filter 7
-                        </label>
-                        <label>
-                            <input type="checkbox" name="filter8" value="8">
-                            Filter 8
-                        </label>
-                        <label>
-                            <input type="checkbox" name="filter9" value="9">
-                            Filter 9
-                        </label>
-                        <label>
-                            <input type="checkbox" name="filter10" value="10">
-                            Filter 10
+                            <input type="checkbox" name="literacy" value="True">
+                            Literacy
                         </label>
                     </div>
                 </div>
                 <div class="right-column">
                     <div class="form-group">
                         <label for="org-name">Organization Name</label>
-                        <input type="org-name" class="form-control" id="org-name" placeholder="Name">
+                        <input type="org-name" class="form-control" id="org-name" name = "organization-name" placeholder="Name">
                     </div>
                     <div class="form-group">
                         <label for="org-desc">Description</label>
-                        <input type="org-desc" class="form-control" id="org-desc" placeholder="Keep it short please!">
+                        <input type="org-desc" class="form-control" id="org-desc" name = "organization-description" placeholder="Keep it short please!">
                     </div>
                     <label>
                         Time Committment:
@@ -74,9 +62,9 @@
                     <label>
                         Impact:
                         <select name="Impact">
-                          <option value="Low">Low</option>
-                          <option value="Medium">Medium</option>
-                          <option value="High">High</option>
+                          <option value="low">Low</option>
+                          <option value="medium">Medium</option>
+                          <option value="high">High</option>
                         </select>
                     </label>
                 </div>
