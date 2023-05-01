@@ -1,0 +1,26 @@
+.container {
+  height: 100%;
+  background-color: #9ab6bd;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.card {
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.innercard {
+  width: 95%;
+  margin: 0 auto;
+  background-color: #9ab6bd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

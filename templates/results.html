@@ -1,1 +1,16 @@
 {% extends "base.html"%}
+{%block style%}
+<link rel = "stylesheet" href ="/static/style/resultsstyle.css">
+{%endblock%}
+{%block centerdiv%}
+<div class ="container">
+    <div class = "card">
+        <h2 class = "text-center">Results:</h2>
+        {%for organization in results%}
+            <div class = "innercard">
+                
+            </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}

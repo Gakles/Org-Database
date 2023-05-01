@@ -57,9 +57,10 @@ def addorg():
 @app.route("/results", methods = ["GET", "POST"])
 def results():
     if request.method == "GET":
-        flash("NO", "Bad user D:<")
-        return redirect(url_for("home"))
-    if request.method == "POST":
+        #flash("NO", "Bad user D:<")
+        #return redirect(url_for("home"))
+        return render_template("results.html")
+    elif request.method == "POST":
         #TODO: Add search stuff
         return render_template("results.html")
 
