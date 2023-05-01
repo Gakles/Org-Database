@@ -1,5 +1,88 @@
 {% extends "base.html"%}
 <!--Style-->
 {%block style%}
-
+<link rel="stylesheet" href="/static/style/orgbuilderstyle.css">
+{%endblock%}
+{%block centerdiv%}
+<div class="container">
+    <form>
+        <div class="card p-4">
+            <h2 class="mb-4 text-center">Create Organization</h2>
+            <div class = "split-container">
+                <div class="left-column">
+                    <h2 class="text-center">Tags</h2>
+                    <div class="checkbox-container">
+                        <label>
+                            <input type="checkbox" name="filter1" value="1">
+                            Filter 1
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter2" value="2">
+                            Filter 2
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter3" value="3">
+                            Filter 3
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter4" value="4">
+                            Filter 4
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter5" value="5">
+                            Filter 5
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter6" value="6">
+                            Filter 6
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter7" value="7">
+                            Filter 7
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter8" value="8">
+                            Filter 8
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter9" value="9">
+                            Filter 9
+                        </label>
+                        <label>
+                            <input type="checkbox" name="filter10" value="10">
+                            Filter 10
+                        </label>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="form-group">
+                        <label for="org-name">Organization Name</label>
+                        <input type="org-name" class="form-control" id="org-name" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="org-desc">Description</label>
+                        <input type="org-desc" class="form-control" id="org-desc" placeholder="Keep it short please!">
+                    </div>
+                    <label>
+                        Time Committment:
+                        <select name="Time">
+                          <option value="0-1">0-1 Hours</option>
+                          <option value="1-2">1-2 Hours</option>
+                          <option value="2+">2+ Hours</option>
+                        </select>
+                    </label>
+                    <label>
+                        Impact:
+                        <select name="Impact">
+                          <option value="Low">Low</option>
+                          <option value="Medium">Medium</option>
+                          <option value="High">High</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-4">Create Organization</button>
+        </div>
+    </form>
+</div>
 {%endblock%}

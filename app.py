@@ -45,6 +45,8 @@ def signup():
 #addorg
 @app.route("/addorg")
 def addorg():
+    #remember to get rid of this once login stuff starts working
+    session["logged_in"] = True
     if session.get("logged_in"):
         return render_template("orgbuilder.html")
     else:
