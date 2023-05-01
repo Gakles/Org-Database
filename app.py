@@ -52,10 +52,7 @@ def addorg():
             flash("Please login", "Error")
             return redirect(url_for("login"))
     elif request.method == "POST":
-        orgname = request.form["organization-name"]
-        orgdesc = request.form["organization-description"]
-        print(orgname + " " + orgdesc)
-        return render_template("orgbuilder.html")
+        addorg(request)
 
 #results
 @app.route("/results", methods = ["GET", "POST"])
@@ -71,3 +68,27 @@ def results():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+
+def addorg(request):
+    tags = []
+    if request.form["mental-health"] == "True":
+        tags.append("mental-health")
+    elif request.form["housing"] == "True":
+        tags.append("housing")
+    elif request.form["environment"] == "True":
+        tags.append("environment")
+    elif request.form["addiction-recovery"] == "True":
+        tags.append("addiction-recovery")
+    elif request.form["elder-care"] == "True":
+        tags.append("elder-care")
+    elif request.form["food-security"] == "True":
+        tags.append("food-security")
+    elif request.form["literacy"] == "True":
+        tags.append("literacy")
+    orgname = request.form["organization-name"]
+    orgdesc = request.form["organization-description"]
+    time_commitment = request.form["time"]
+    impact = request.form["impact"]
+    
+
+    
