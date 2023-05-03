@@ -47,6 +47,11 @@ def addorghelper(request):
     }
     return rtndict
 
+def create_new_account(proposed_username, proposed_password):
+    new_user = User(proposed_username, proposed_password)
+    print(new_user)
+    db_session.add(new_user)
+    db_session.commit()
 
 # TODO: Fill in methods and routes
 
@@ -96,9 +101,7 @@ def signup():
         #return redirect(url_for("signup"))
         #success
         #dbsession add new user
-        new_user = User(proposed_username, proposed_password)
-        db_session.add(new_user)
-        db_session.commit()
+        create_new_account(proposed_username, proposed_password)
         flash("Account created! Login to continue", "Account created")
         return redirect(url_for("login"))
 
@@ -121,9 +124,6 @@ def addorg():
         flash("Organization " + orgdict.get("orgname") + " created!", "Organization created")
         return render_template("orgbuilder.html")
         
-
-
-
 #results
 @app.route("/results", methods = ["GET", "POST"])
 def results():
