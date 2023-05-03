@@ -96,9 +96,11 @@ def signup():
         proposed_password = request.form["proposed_password"]
         print(proposed_username + " " + proposed_password)
         #TODO: do sqlalchemy to check if the username and password combo exists
+        if db_session.query(User).where((User.username == proposed_username) | (User.password == proposed_password)) is not None:
         #fail
-        #flash("Sorry, either this username or password already exists. Please try a different one", "Account already exists")
-        #return redirect(url_for("signup"))
+            flash("Sorry, either this username or password already exists. Please try a different one", "Account already exists")
+            print("User already exists")
+            return redirect(url_for("signup"))
         #success
         #dbsession add new user
         create_new_account(proposed_username, proposed_password)
@@ -138,7 +140,6 @@ def results():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
-
 
 
     
