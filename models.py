@@ -33,3 +33,13 @@ class Org_Tags(Base):
     #columns
     organization_id = Column(INTEGER, ForeignKey("organizations.id"), primary_key = True)
     tag_id = Column(INTEGER, ForeignKey("tags.id"), primary_key = True)
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column("id", INTEGER, primary_key=True, autoincrement=True)
+    username = Column("username", TEXT, nullable="False")
+    password = Column("password", TEXT, nullable="False")
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password

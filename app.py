@@ -7,6 +7,47 @@ app = Flask(__name__)
 # TODO: Change the secret key
 app.secret_key = "The geopolitical consequences OPEC's latest announcement are far reaching. The mining of the Strait of Hormuz will strangle the flow of international tankers, while Russia's exclusion from price-matching meeting may lead to it's collapse."
 
+
+#Functions
+
+def keychecker(dic, key):
+    if key in dic.keys():
+        return True
+    else: 
+        return False
+
+def addorghelper(request):
+    tags = []
+    if keychecker(request.form, "mental-health"):
+        tags.append("mental-health")
+    if keychecker(request.form, "housing"):
+        tags.append("housing")
+    if keychecker(request.form, "environment"):
+        tags.append("environment")
+    if keychecker(request.form, "addiction-recovery"):
+        tags.append("addiction-recovery")
+    if keychecker(request.form, "elder-care"):
+        tags.append("elder-care")
+    if keychecker(request.form, "food-security"):
+        tags.append("food-security")
+    if keychecker(request.form, "literacy"):
+        tags.append("literacy")
+    print(tags)
+    orgname = request.form["organization-name"]
+    orgdesc = request.form["organization-description"]
+    time_commitment = request.form["time"]
+    impact = request.form["impact"]
+    rtndict = {
+        #IMPORTANT tags is a list of strings
+        "tags" : tags,
+        "orgname" : orgname,
+        "orgdesc" : orgdesc,
+        "time_commitment" : time_commitment,
+        "impact" : impact
+    }
+    return rtndict
+
+
 # TODO: Fill in methods and routes
 
 
@@ -25,12 +66,13 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        #TODO: do dbsession to authenticate
+        print(username + " " + password)
+        #TODO: do sqlalchemy to authenticate
         #fail
         flash("Invalid Login", "error")
         return redirect(url_for("home"))
         #success
-        session["logged_in"] = TRUE
+        session["logged_in"] = True
         flash("Welcome " + session("username"), "welcome")
         return redirect(url_for("addorg"))
 
@@ -38,13 +80,34 @@ def login():
 @app.route("/signup", methods = ["GET", "POST"])
 def signup():
     if request.method == "GET":
-        return render_template("signup.html")
+        session["logged_in"] = False
+        if session.get("logged_in") == True:
+            flash("You are already logged in", "Logged in")
+            return redirect(url_for("home"))
+        elif session.get("logged_in") == False:
+            return render_template("signup.html")
+    if request.method == "POST":
+        proposed_username = request.form["proposed_username"]
+        proposed_password = request.form["proposed_password"]
+        print(proposed_username + " " + proposed_password)
+        #TODO: do sqlalchemy to check if the username and password combo exists
+        #fail
+        #flash("Sorry, either this username or password already exists. Please try a different one", "Account already exists")
+        #return redirect(url_for("signup"))
+        #success
+        #dbsession add new user
+        new_user = User(proposed_username, proposed_password)
+        db_session.add(new_user)
+        db_session.commit()
+        flash("Account created! Login to continue", "Account created")
+        return redirect(url_for("login"))
+
 
 #addorg
 @app.route("/addorg", methods = ["POST", "GET"])
 def addorg():
-    #remember to get rid of this once login stuff starts working
     if request.method == "GET":
+        #remember to get rid of this once login stuff starts working
         session["logged_in"] = True
         if session.get("logged_in"):
             return render_template("orgbuilder.html")
@@ -52,7 +115,14 @@ def addorg():
             flash("Please login", "Error")
             return redirect(url_for("login"))
     elif request.method == "POST":
-        addorg(request)
+        orgdict = addorghelper(request)
+        #add the org to the database
+        print(orgdict["orgname"])
+        flash("Organization " + orgdict.get("orgname") + " created!", "Organization created")
+        return render_template("orgbuilder.html")
+        
+
+
 
 #results
 @app.route("/results", methods = ["GET", "POST"])
@@ -69,26 +139,6 @@ if __name__ == "__main__":
     init_db()
     app.run(debug=True)
 
-def addorg(request):
-    tags = []
-    if request.form["mental-health"] == "True":
-        tags.append("mental-health")
-    elif request.form["housing"] == "True":
-        tags.append("housing")
-    elif request.form["environment"] == "True":
-        tags.append("environment")
-    elif request.form["addiction-recovery"] == "True":
-        tags.append("addiction-recovery")
-    elif request.form["elder-care"] == "True":
-        tags.append("elder-care")
-    elif request.form["food-security"] == "True":
-        tags.append("food-security")
-    elif request.form["literacy"] == "True":
-        tags.append("literacy")
-    orgname = request.form["organization-name"]
-    orgdesc = request.form["organization-description"]
-    time_commitment = request.form["time"]
-    impact = request.form["impact"]
-    
+
 
     
