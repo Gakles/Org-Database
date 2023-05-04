@@ -67,54 +67,56 @@ def home():
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        if session.get("logged_in") == True:
+            flash("You are already logged in", "logged_in True")
+            return redirect(url_for("home"))
+        else:
+            return render_template("login.html")
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         print(username + " " + password)
         #TODO: do sqlalchemy to authenticate
-        #fail
-        flash("Invalid Login", "error")
-        return redirect(url_for("home"))
-        #success
-        session["logged_in"] = True
-        flash("Welcome " + session("username"), "welcome")
-        return redirect(url_for("addorg"))
+        if db_session.query(User).where((User.username == username) & (User.password == password)):
+            session["logged_in"] = True
+            flash("Welcome", "welcome")
+            return redirect(url_for("addorg"))
+        else:
+            flash("Invalid Login", "error")
+            return redirect(url_for("home"))
 
 #signup
 @app.route("/signup", methods = ["GET", "POST"])
 def signup():
     if request.method == "GET":
-        session["logged_in"] = False
         if session.get("logged_in") == True:
             flash("You are already logged in", "Logged in")
             return redirect(url_for("home"))
-        elif session.get("logged_in") == False:
+        else:
             return render_template("signup.html")
     if request.method == "POST":
         proposed_username = request.form["proposed_username"]
         proposed_password = request.form["proposed_password"]
         print(proposed_username + " " + proposed_password)
-        #TODO: do sqlalchemy to check if the username and password combo exists
-        if db_session.query(User).where((User.username == proposed_username) | (User.password == proposed_password)) is not None:
-        #fail
+        #Check if account already exists
+        johns = db_session.query(User).where((User.username == proposed_username) | (User.password == proposed_password)).first()
+        print(johns)
+        if johns is not None:
             flash("Sorry, either this username or password already exists. Please try a different one", "Account already exists")
             print("User already exists")
             return redirect(url_for("signup"))
-        #success
-        #dbsession add new user
-        create_new_account(proposed_username, proposed_password)
-        flash("Account created! Login to continue", "Account created")
-        return redirect(url_for("login"))
+        #Add new user 
+        else:
+            create_new_account(proposed_username, proposed_password)
+            flash("Account created! Login to continue", "Account created")
+            return redirect(url_for("login"))
 
 
 #addorg
 @app.route("/addorg", methods = ["POST", "GET"])
 def addorg():
     if request.method == "GET":
-        #remember to get rid of this once login stuff starts working
-        session["logged_in"] = True
-        if session.get("logged_in"):
+        if session.get("logged_in") == True:
             return render_template("orgbuilder.html")
         else:
             flash("Please login", "Error")
@@ -136,6 +138,14 @@ def results():
     elif request.method == "POST":
         #TODO: Add search stuff
         return render_template("results.html")
+    
+#logout
+@app.route("/logout")
+def logout():
+    if "logged_in" in session:
+        session.pop("logged_in")
+    flash("You have been logged out", "Logout")
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     init_db()
