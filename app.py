@@ -60,7 +60,6 @@ def create_new_account(proposed_username, proposed_password):
 #home
 @app.route("/")
 def home():
-    flash("john", "cena")
     return render_template("home.html")
 
 #login
@@ -132,9 +131,8 @@ def addorg():
 @app.route("/results", methods = ["GET", "POST"])
 def results():
     if request.method == "GET":
-        #flash("NO", "Bad user D:<")
-        #return redirect(url_for("home"))
-        return render_template("results.html")
+        flash("NO Bad user D:<", "Sin")
+        return redirect(url_for("home"))
     elif request.method == "POST":
         #TODO: Add search stuff
         return render_template("results.html")
@@ -144,8 +142,8 @@ def results():
 def logout():
     if "logged_in" in session:
         session.pop("logged_in")
-    flash("You have been logged out", "Logout")
-    return redirect(url_for("home"))
+        flash("You have been logged out", "Logout")
+        return redirect(url_for("home"))
 
 if __name__ == "__main__":
     init_db()

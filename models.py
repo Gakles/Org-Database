@@ -16,10 +16,16 @@ class Organization(Base):
     name = Column("name", TEXT, nullable=False)
     description = Column("description", TEXT, nullable=False)
     tags = relationship("Tags", secondary="organization_tag", back_populates="organizations")
+    time_commitment = Column("time_commitment", TEXT, nullable=False)
+    impact = Column("impact", TEXT, nullable=False)
     #Constructor
-    def __init__(self, name, description):
+    def __init__(self, name, description,time_commitment, impact):
         self.name = name
         self.description = description
+        self.time_commitment = time_commitment
+        self.impact = impact
+    def __repr__(self):
+        return("Organization: " + self.name + " with time commitment: " + self.time_commitment + " and impact: " + self.impact)
 
 class Tags(Base):
     __tablename__ = "tags"
