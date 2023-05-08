@@ -42,10 +42,32 @@ def addorghelper(request):
         "tags" : tags,
         "orgname" : orgname,
         "orgdesc" : orgdesc,
-        "time_commitment" : time_commitment,
+        "time-commitment" : time_commitment,
         "impact" : impact
     }
     return rtndict
+
+def org_tag_applier(taglist, org):
+    if org_tag_checker(taglist, "mental-health"):
+        org.tags.append(db_session.query(Tags).where(Tags.name == "mental-health").first())
+    if org_tag_checker(taglist, "housing"):
+        org.tags.append(db_session.query(Tags).where(Tags.name == "housing").first())
+    if org_tag_checker(taglist, "environment"):
+        org.tags.append(db_session.query(Tags).where(Tags.name == "environment").first())
+    if org_tag_checker(taglist, "addiction-recovery"):
+        org.tags.append(db_session.query(Tags).where(Tags.name == "addiction-recovery").first())
+    if org_tag_checker(taglist, "elder-care"):
+        org.tags.append(db_session.query(Tags).where(Tags.name == "elder-care").first())
+    if org_tag_checker(taglist, "food-security"):
+        org.tags.append(db_session.query(Tags).where(Tags.name == "food-security").first())
+    if org_tag_checker(taglist, "literacy"):
+        org.tags.append(db_session.query(Tags).where(Tags.name == "literacy").first())
+#helper method for org_tag_applier
+def org_tag_checker(tags, checkstr):
+    if checkstr in tags:
+        return True
+    else:
+        return False
 
 def create_new_account(proposed_username, proposed_password):
     new_user = User(proposed_username, proposed_password)
@@ -123,8 +145,22 @@ def addorg():
     elif request.method == "POST":
         orgdict = addorghelper(request)
         #add the org to the database
-        print(orgdict["orgname"])
-        flash("Organization " + orgdict.get("orgname") + " created!", "Organization created")
+        #Create the organization object
+        #print(orgdict.get("orgname"), orgdict.get("orgdesc"))
+        potential_org = Organization(orgdict["orgname"], orgdict["orgdesc"], orgdict["time-commitment"], orgdict["impact"])
+        #Check if it already exists
+        if db_session.query(Organization).where(Organization.name == potential_org.name).first() is not None:
+            flash("Organization already exists", "Org already exists")
+        else: 
+            #Add the org
+            db_session.add(potential_org)
+            db_session.commit()
+            #Add the tags
+            neworg = db_session.query(Organization).where(Organization.name == potential_org.name).first()
+            org_tag_applier(orgdict["tags"], neworg)
+            flash("Organization: " + str(neworg) + " successfully created/nIt has tags: " + str(neworg.tags))
+
+
         return render_template("orgbuilder.html")
         
 #results
