@@ -32,11 +32,18 @@ def addorghelper(request):
         tags.append("food-security")
     if keychecker(request.form, "literacy"):
         tags.append("literacy")
-    print(tags)
-    orgname = request.form["organization-name"]
-    orgdesc = request.form["organization-description"]
-    time_commitment = request.form["time"]
-    impact = request.form["impact"]
+    orgname = ""
+    if keychecker(request.form, "organization-name"):
+        orgname = request.form["organization-name"]
+    orgdesc = ""
+    if keychecker(request.form, "organization-description"):
+        orgdesc = request.form["organization-description"]
+    time_commitment = ""
+    if keychecker(request.form, "time"):
+        time_commitment = request.form["time"]
+    impact = ""
+    if keychecker(request.form, "impact"):
+        impact = request.form["impact"]
     rtndict = {
         #IMPORTANT tags is a list of strings
         "tags" : tags,
@@ -47,21 +54,24 @@ def addorghelper(request):
     }
     return rtndict
 
+def org_tag_applier_helper(taglist, org, tag_string):
+    if org_tag_checker(taglist, tag_string):
+        #get the correct tag
+        tag = db_session.query(Tags).where(Tags.name == tag_string).first()
+        print(tag)
+        #append it to the organization list -> it should back populate to tags?
+        #org.tags.append(tag)
+        #create Org_Tags object, the constructor takes the objects and gets their ids
+        new_Org_Tags = Org_Tags(org, tag)
+        #add it
+        db_session.add(new_Org_Tags)
+        #commit it
+        db_session.commit()
+
 def org_tag_applier(taglist, org):
-    if org_tag_checker(taglist, "mental-health"):
-        org.tags.append(db_session.query(Tags).where(Tags.name == "mental-health").first())
-    if org_tag_checker(taglist, "housing"):
-        org.tags.append(db_session.query(Tags).where(Tags.name == "housing").first())
-    if org_tag_checker(taglist, "environment"):
-        org.tags.append(db_session.query(Tags).where(Tags.name == "environment").first())
-    if org_tag_checker(taglist, "addiction-recovery"):
-        org.tags.append(db_session.query(Tags).where(Tags.name == "addiction-recovery").first())
-    if org_tag_checker(taglist, "elder-care"):
-        org.tags.append(db_session.query(Tags).where(Tags.name == "elder-care").first())
-    if org_tag_checker(taglist, "food-security"):
-        org.tags.append(db_session.query(Tags).where(Tags.name == "food-security").first())
-    if org_tag_checker(taglist, "literacy"):
-        org.tags.append(db_session.query(Tags).where(Tags.name == "literacy").first())
+    tagstrings = ["mental-health", "housing", "environment", "addiction-recovery", "elder-care", "food-security", "literacy"]
+    for string in tagstrings:
+        org_tag_applier_helper(taglist, org, string)
 #helper method for org_tag_applier
 def org_tag_checker(tags, checkstr):
     if checkstr in tags:
@@ -71,18 +81,33 @@ def org_tag_checker(tags, checkstr):
 
 def create_new_account(proposed_username, proposed_password):
     new_user = User(proposed_username, proposed_password)
-    print(new_user)
     db_session.add(new_user)
     db_session.commit()
+
+def orgsearcher(orgdict):
+    results = db_session.query(Organization).all()
+    for org in results:
+        print(org)
+        for tag in org.tags:
+            print(tag)
+    if len(orgdict["tags"]) >= 0:
+        for org in results:
+            for tag in org.tags:
+                print(tag)
 
 # TODO: Fill in methods and routes
 
 
 
 #home
-@app.route("/")
+@app.route("/", methods = ["GET", "POST"])
 def home():
-    return render_template("home.html")
+    if request.method == "GET":
+        return render_template("home.html")
+    elif request.method == "POST":
+        #TODO: Add search stuff
+        
+        return render_template("results.html")
 
 #login
 @app.route("/login", methods = ["GET", "POST"])
@@ -132,7 +157,6 @@ def signup():
             flash("Account created! Login to continue", "Account created")
             return redirect(url_for("login"))
 
-
 #addorg
 @app.route("/addorg", methods = ["POST", "GET"])
 def addorg():
@@ -167,11 +191,10 @@ def addorg():
 @app.route("/results", methods = ["GET", "POST"])
 def results():
     if request.method == "GET":
-        flash("NO Bad user D:<", "Sin")
-        return redirect(url_for("home"))
-    elif request.method == "POST":
-        #TODO: Add search stuff
-        return render_template("results.html")
+        #Search through all the requirements
+        orgdict = addorghelper(request)
+        results = orgsearcher(orgdict)
+        return render_template("home.html")
     
 #logout
 @app.route("/logout")
@@ -184,6 +207,7 @@ def logout():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+    #printstatement = db_session.query(Organization).where(Organization.name == "")
 
 
     

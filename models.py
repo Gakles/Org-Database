@@ -43,6 +43,9 @@ class Org_Tags(Base):
     #columns
     organization_id = Column(INTEGER, ForeignKey("organizations.id"), primary_key = True)
     tag_id = Column(INTEGER, ForeignKey("tags.id"), primary_key = True)
+    def __init__(self, org, tag):
+        self.organization_id = org.id
+        self.tag_id = tag.id
 
 class User(Base):
     __tablename__ = "users"
