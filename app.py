@@ -236,4 +236,4 @@ def logout():
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    app.run(host="172.16.3.43", port=5001)
