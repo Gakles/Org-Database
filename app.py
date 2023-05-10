@@ -92,19 +92,19 @@ def complexorgsearcher(searchinfo):
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
     #continue by pruning impact
-    if keychecker(searchinfo, "impact"):
+    if searchinfo["impact"] != "":
         orglist = db_session.query(Organization).where(Organization.impact == searchinfo["impact"])
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
     #prune by time commitment
-    if keychecker(searchinfo, "time-commitment"):
+    if searchinfo["time-commitment"] != "":
         orglist = db_session.query(Organization).where(Organization.time_commitment == searchinfo["time-commitment"])
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
     #prune by tag (╥﹏╥)
-    if keychecker(searchinfo, "tags"):
+    if searchinfo["tags"] != "":
         for tag in searchinfo["tags"]:
             orglist = db_session.query(Organization).join(Org_Tags).join(Tags).filter(Tags.name == tag).all()
             orglist_ids = [obj.id for obj in orglist]
@@ -219,7 +219,9 @@ def results(type):
         #commenting this out because despite the "security consequences" its too annoying
         #session.pop("orgdict")
         search = orgdict["orgname"]
+        print(search)
         orglist = db_session.query(Organization).filter(Organization.name.like(f"%{search}%")).all()
+        print(orglist)
         return render_template("results.html", orglist = orglist)
     #if request.method == "GET":
         #return render_template("home.html")
