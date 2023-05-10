@@ -113,10 +113,6 @@ def complexorgsearcher(searchinfo):
 
     return results
 
-# TODO: Fill in methods and routes
-
-
-
 #home
 @app.route("/", methods = ["GET", "POST"])
 def home():
@@ -144,7 +140,6 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         print(username + " " + password)
-        #TODO: do sqlalchemy to authenticate
         if db_session.query(User).where((User.username == username) & (User.password == password)):
             session["logged_in"] = True
             flash("Welcome", "welcome")

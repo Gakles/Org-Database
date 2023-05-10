@@ -1,6 +1,7 @@
 <!--Taken from ChatGPT, modified by Galen Horchner-->
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Volunteerable</title>
 	<!-- Bootstrap CSS -->
@@ -10,12 +11,14 @@
 	{%block style%}
 	{%endblock%}
 </head>
+
 <body onLoad="alert_msg">
 	<nav class="navbar">
 		<a class="navbar-brand bg-intermediate" href="/">
 			<img src="/static/images/logo.png" height="30" alt="Volunteerable Logo">
 			<span class="text-success bg-intermediate p-2">Volunteerable</span>
 		</a>
+			<!--"Dynamic" navbar via jinja-->
 		<div class="ml-auto bg-intermediate p-2">
 			<a class="nav-link text-success" href="#">Coming Soon</a>
 			{%if session.get("logged_in") == None%}
@@ -23,32 +26,32 @@
 			{%endif%}
 			{%if session.get("logged_in") == True%}
 			<a class="nav-link text-success" href="/addorg">Add Organization</a>
-				<a class="nav-link text-success" href="/logout">Logout</a>
+			<a class="nav-link text-success" href="/logout">Logout</a>
 			{%endif%}
 		</div>
 	</nav>
-    <div class="center-div">
+	<div class="center-div">
 		{%block centerdiv%}
 		{%endblock%}
 	</div>
 	{%block flash%}
 	{%endblock%}
-	<!-- Rest of your content goes here -->
 
 	<!-- Bootstrap JS and jQuery -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<!--The alert/flash messages-->
 	{% with messages = get_flashed_messages() %}
-    	{% if messages %}
+	{% if messages %}
 	<script>
-		window.onload = function() {
+		window.onload = function () {
 			alert('{{ messages[0] | safe }}')
 		};
 	</script>
-    	{% endif %}
-	{% endwith %}	
+	{% endif %}
+	{% endwith %}
 	{%block script%}
 	{%endblock%}
 </body>
+
 </html>

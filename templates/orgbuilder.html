@@ -5,10 +5,10 @@
 {%endblock%}
 {%block centerdiv%}
 <div class="container">
-    <form method = "POST">
+    <form method="POST">
         <div class="card p-4">
             <h2 class="mb-4 text-center">Create Organization</h2>
-            <div class = "split-container">
+            <div class="split-container">
                 <div class="left-column">
                     <h2 class="text-center">Tags</h2>
                     <div class="checkbox-container">
@@ -45,26 +45,28 @@
                 <div class="right-column">
                     <div class="form-group">
                         <label for="org-name">Organization Name</label>
-                        <input type="org-name" class="form-control" id="org-name" name = "organization-name" placeholder="Name">
+                        <input type="org-name" class="form-control" id="org-name" name="organization-name"
+                            placeholder="Name">
                     </div>
                     <div class="form-group">
                         <label for="org-desc">Description</label>
-                        <input type="org-desc" class="form-control" id="org-desc" name = "organization-description" placeholder="Keep it short please!">
+                        <input type="org-desc" class="form-control" id="org-desc" name="organization-description"
+                            placeholder="Keep it short please!">
                     </div>
                     <label>
                         Time Committment:
                         <select name="time">
-                          <option value="0-1">0-1 Hours</option>
-                          <option value="1-2">1-2 Hours</option>
-                          <option value="2+">2+ Hours</option>
+                            <option value="0-1">0-1 Hours</option>
+                            <option value="1-2">1-2 Hours</option>
+                            <option value="2+">2+ Hours</option>
                         </select>
                     </label>
                     <label>
                         Impact:
                         <select name="impact">
-                          <option value="low">Low</option>
-                          <option value="medium">Medium</option>
-                          <option value="high">High</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
                         </select>
                     </label>
                 </div>

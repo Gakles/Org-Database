@@ -6,53 +6,52 @@
 {%block centerdiv%}
 <!--Basic search-->
 <div class="container">
-    <div class="search-box">
-      <h2>Search by organization name</h2>
-      <form method = "POST">
-        <input type="text" name = "organization-name" placeholder="Enter name">
-        <button type="submit" name = "submit" value = "simple">Search</button>
-      </form>
-    </div>
+  <div class="search-box">
+    <h2>Search by organization name</h2>
+    <form method="POST">
+      <input type="text" name="organization-name" placeholder="Enter name">
+      <button type="submit" name="submit" value="simple">Search</button>
+    </form>
+  </div>
 
-<div class="divider"></div>
-<!--Advanced search-->
-
-<form class="split-container" method = "POST">
+  <div class="divider"></div>
+  <!--Advanced search-->
+  <form class="split-container" method="POST">
     <div class="left-column">
       <h2>Organization Tags</h2>
       <label>
         <input type="checkbox" name="mental-health" value="True">
         Mental Health
-    </label>
-    <label>
+      </label>
+      <label>
         <input type="checkbox" name="housing" value="True">
         Housing
-    </label>
-    <label>
+      </label>
+      <label>
         <input type="checkbox" name="environment" value="True">
         Environment
-    </label>
-    <label>
+      </label>
+      <label>
         <input type="checkbox" name="addiction-recovery" value="True">
         Addiction & Recovery
-    </label>
-    <label>
+      </label>
+      <label>
         <input type="checkbox" name="elder-care" value="True">
         Elder Care
-    </label>
-    <label>
+      </label>
+      <label>
         <input type="checkbox" name="food-security" value="True">
         Food Security
-    </label>
-    <label>
+      </label>
+      <label>
         <input type="checkbox" name="literacy" value="True">
         Literacy
-    </label>
+      </label>
     </div>
     <div class="right-column">
       <!--TODDO: Figure out how to center this john-->
-      <div class = "right-column-title">
-      <h2 class = "text-center">Additional Options</h2>
+      <div class="right-column-title">
+        <h2 class="text-center">Additional Options</h2>
       </div>
       <label>
         Time Committment:
@@ -61,35 +60,24 @@
           <option value="1-2">1-2 Hours</option>
           <option value="2+">2+ Hours</option>
         </select>
-    </label>
-    <label>
+      </label>
+      <label>
         Impact:
         <select name="impact">
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
-    </label>
+      </label>
       <label>
         Org Name:
         <input type="text" name="organization-name" placeholder="Category optional for search">
       </label>
     </div>
-    <div class = "bottom-submit">
-    <button type="submit" name = "submit" value = "complex">Submit</button>
+    <div class="bottom-submit">
+      <button type="submit" name="submit" value="complex">Submit</button>
     </div>
   </form>
 </div>
 
-{%endblock%}
-{% block flash%}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <p>
-            {% for msg in messages %}
-                {{msg}}
-            {% endfor %}
-        </p>
-        {% endif %}
-    {% endwith %}
 {%endblock%}

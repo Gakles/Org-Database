@@ -4,8 +4,9 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  overflow:hidden;
+  overflow: hidden;
 }
+
 .card {
   width: 100%;
   background-color: white;
@@ -17,6 +18,7 @@
   margin-top: 1vw;
   overflow: auto;
 }
+
 .organization {
   display: flex;
   flex-direction: column;
@@ -60,6 +62,7 @@
   margin: 0;
   padding: 0;
 }
+
 .scrolldiv {
   overflow: auto
 }
