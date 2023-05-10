@@ -81,32 +81,35 @@ def create_new_account(proposed_username, proposed_password):
     new_user = User(proposed_username, proposed_password)
     db_session.add(new_user)
     db_session.commit()
-#Search through orgs based off dict
+#Search through orgs based off orgdict aka searchinfo
 def complexorgsearcher(searchinfo):
     results = db_session.query(Organization).all()
-    print(results)
     #might as well first prune by name first, if they included one
-    if keychecker(searchinfo, "orgname"):
+    if searchinfo["orgname"] != "":
         search = searchinfo["orgname"]
         orglist = db_session.query(Organization).filter(Organization.name.like(f"%{search}%")).all()
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
-        print("Pruning by name: " + str(results))
     #continue by pruning impact
     if keychecker(searchinfo, "impact"):
         orglist = db_session.query(Organization).where(Organization.impact == searchinfo["impact"])
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
-        print("Pruning by impact: " + str(results))
     #prune by time commitment
     if keychecker(searchinfo, "time-commitment"):
         orglist = db_session.query(Organization).where(Organization.time_commitment == searchinfo["time-commitment"])
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
-        print("Pruning by time-commitment: " + str(results))
+    #prune by tag (╥﹏╥)
+    if keychecker(searchinfo, "tags"):
+        for tag in searchinfo["tags"]:
+            orglist = db_session.query(Organization).join(Org_Tags).join(Tags).filter(Tags.name == tag).all()
+            orglist_ids = [obj.id for obj in orglist]
+            newresults = [obj for obj in results if obj.id in orglist_ids]
+            results = newresults
 
     return results
 
@@ -211,14 +214,15 @@ def addorg():
 def results(type):
     if type == "complex":
         orgdict = session.get("orgdict")
-        session.pop("orgdict")
+        #session.pop("orgdict") See below
         print(orgdict)
         orglist = complexorgsearcher(orgdict)
         return render_template("results.html", orglist = orglist)
     elif type == "simple":
         print(session.get("orgdict"))
         orgdict = session.get("orgdict")
-        session.pop("orgdict")
+        #commenting this out because despite the "security consequences" its too annoying
+        #session.pop("orgdict")
         search = orgdict["orgname"]
         orglist = db_session.query(Organization).filter(Organization.name.like(f"%{search}%")).all()
         return render_template("results.html", orglist = orglist)
@@ -236,6 +240,3 @@ def logout():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
-
-
-    

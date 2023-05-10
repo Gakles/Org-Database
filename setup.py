@@ -13,9 +13,6 @@ if db_session.query(Tags).first() is None:
     PawPatrol = Organization("East Bay Paw Patrol", "The East Bay chapter of Paw Patrol, an organization dedicated to animal assistance.", "1-2", "high")
     db_session.add(PawPatrol)
     db_session.commit()
-    YMSL = Organization("Young Mens Service League", "The Bay Area chapter of Young Mens Service League, dedicated to community service and mother-son bonding", "2+", "low")
-    db_session.add(YMSL)
-    db_session.commit()
 
 #TAGS
 if db_session.query(Tags).first() is None:

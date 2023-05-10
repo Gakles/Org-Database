@@ -6,11 +6,18 @@
 <div class ="container">
     <div class = "card">
         <h2 class = "text-center">Results:</h2>
+            <div class = "scrolldiv">
         {%for organization in orglist%}
-            <div class = "innercard">
-                <p>{{organization.name}}</p>
+            <div class = "organization">
+                    <h2 class="name">{{organization.name}}</h2>
+                    <p class="description">{{organization.description}}</p>
+                    <ul class="info">
+                      <li class="time-commitment">Time commitment: {{organization.time_commitment}}</li>
+                      <li class="impact">Impact: {{organization.impact}}</li>
+                    </ul>
             </div>
         {%endfor%}
+    </div>
     </div>
 </div>
 {%endblock%}
