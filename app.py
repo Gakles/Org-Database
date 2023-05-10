@@ -84,6 +84,30 @@ def create_new_account(proposed_username, proposed_password):
 #Search through orgs based off dict
 def complexorgsearcher(searchinfo):
     results = db_session.query(Organization).all()
+    print(results)
+    #might as well first prune by name first, if they included one
+    if keychecker(searchinfo, "orgname"):
+        search = searchinfo["orgname"]
+        orglist = db_session.query(Organization).filter(Organization.name.like(f"%{search}%")).all()
+        orglist_ids = [obj.id for obj in orglist]
+        newresults = [obj for obj in results if obj.id in orglist_ids]
+        results = newresults
+        print("Pruning by name: " + str(results))
+    #continue by pruning impact
+    if keychecker(searchinfo, "impact"):
+        orglist = db_session.query(Organization).where(Organization.impact == searchinfo["impact"])
+        orglist_ids = [obj.id for obj in orglist]
+        newresults = [obj for obj in results if obj.id in orglist_ids]
+        results = newresults
+        print("Pruning by impact: " + str(results))
+    #prune by time commitment
+    if keychecker(searchinfo, "time-commitment"):
+        orglist = db_session.query(Organization).where(Organization.time_commitment == searchinfo["time-commitment"])
+        orglist_ids = [obj.id for obj in orglist]
+        newresults = [obj for obj in results if obj.id in orglist_ids]
+        results = newresults
+        print("Pruning by time-commitment: " + str(results))
+
     return results
 
 # TODO: Fill in methods and routes
@@ -99,8 +123,8 @@ def home():
         #interpert form results
         #reusing function, keeping old name because that is its primary purpose
         orgdict = addorghelper(request)
+        print(orgdict)
         session["orgdict"] = orgdict
-        print(request.form["submit"])
         searchtype = request.form["submit"]
         return redirect(url_for("results", type = searchtype))
 
@@ -188,16 +212,16 @@ def results(type):
     if type == "complex":
         orgdict = session.get("orgdict")
         session.pop("orgdict")
-        return render_template("results.html", orgdict)
+        print(orgdict)
+        orglist = complexorgsearcher(orgdict)
+        return render_template("results.html", orglist = orglist)
     elif type == "simple":
         print(session.get("orgdict"))
         orgdict = session.get("orgdict")
         session.pop("orgdict")
-        #get name
         search = orgdict["orgname"]
-        print(search)
-        print(db_session.query(Organization).filter(Organization.name.like(f"%{search}%")).all())
-        return render_template("results.html", orgdict = orgdict)
+        orglist = db_session.query(Organization).filter(Organization.name.like(f"%{search}%")).all()
+        return render_template("results.html", orglist = orglist)
     #if request.method == "GET":
         #return render_template("home.html")
     
