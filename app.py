@@ -53,7 +53,7 @@ def addorghelper(request):
         "impact" : impact
     }
     return rtndict
-
+#TODO: Clean the next three methods up and combine them?
 def org_tag_applier_helper(taglist, org, tag_string):
     if org_tag_checker(taglist, tag_string):
         #get the correct tag
@@ -67,12 +67,10 @@ def org_tag_applier_helper(taglist, org, tag_string):
         db_session.add(new_Org_Tags)
         #commit it
         db_session.commit()
-
 def org_tag_applier(taglist, org):
     tagstrings = ["mental-health", "housing", "environment", "addiction-recovery", "elder-care", "food-security", "literacy"]
     for string in tagstrings:
         org_tag_applier_helper(taglist, org, string)
-#helper method for org_tag_applier
 def org_tag_checker(tags, checkstr):
     if checkstr in tags:
         return True
@@ -83,17 +81,10 @@ def create_new_account(proposed_username, proposed_password):
     new_user = User(proposed_username, proposed_password)
     db_session.add(new_user)
     db_session.commit()
-
-def orgsearcher(orgdict):
+#Search through orgs based off dict
+def complexorgsearcher(searchinfo):
     results = db_session.query(Organization).all()
-    for org in results:
-        print(org)
-        for tag in org.tags:
-            print(tag)
-    if len(orgdict["tags"]) >= 0:
-        for org in results:
-            for tag in org.tags:
-                print(tag)
+    return results
 
 # TODO: Fill in methods and routes
 
@@ -105,9 +96,13 @@ def home():
     if request.method == "GET":
         return render_template("home.html")
     elif request.method == "POST":
-        #TODO: Add search stuff
-        
-        return render_template("results.html")
+        #interpert form results
+        #reusing function, keeping old name because that is its primary purpose
+        orgdict = addorghelper(request)
+        session["orgdict"] = orgdict
+        print(request.form["submit"])
+        searchtype = request.form["submit"]
+        return redirect(url_for("results", type = searchtype))
 
 #login
 @app.route("/login", methods = ["GET", "POST"])
@@ -188,13 +183,23 @@ def addorg():
         return render_template("orgbuilder.html")
         
 #results
-@app.route("/results", methods = ["GET", "POST"])
-def results():
-    if request.method == "GET":
-        #Search through all the requirements
-        orgdict = addorghelper(request)
-        results = orgsearcher(orgdict)
-        return render_template("home.html")
+@app.route("/results/<type>", methods = ["GET", "POST"])
+def results(type):
+    if type == "complex":
+        orgdict = session.get("orgdict")
+        session.pop("orgdict")
+        return render_template("results.html", orgdict)
+    elif type == "simple":
+        print(session.get("orgdict"))
+        orgdict = session.get("orgdict")
+        session.pop("orgdict")
+        #get name
+        search = orgdict["orgname"]
+        print(search)
+        print(db_session.query(Organization).filter(Organization.name.like(f"%{search}%")).all())
+        return render_template("results.html", orgdict = orgdict)
+    #if request.method == "GET":
+        #return render_template("home.html")
     
 #logout
 @app.route("/logout")
@@ -207,7 +212,6 @@ def logout():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
-    #printstatement = db_session.query(Organization).where(Organization.name == "")
 
 
     

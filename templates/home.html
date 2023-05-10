@@ -7,19 +7,19 @@
 <!--Basic search-->
 <div class="container">
     <div class="search-box">
-      <h2>Search by name</h2>
-      <form>
-        <input type="text" placeholder="Enter name">
-        <button type="submit">Search</button>
+      <h2>Search by organization name</h2>
+      <form method = "POST">
+        <input type="text" name = "organization-name" placeholder="Enter name">
+        <button type="submit" name = "submit" value = "simple">Search</button>
       </form>
     </div>
 
 <div class="divider"></div>
 <!--Advanced search-->
 
-<form class="split-container">
+<form class="split-container" method = "POST">
     <div class="left-column">
-      <h2>Tags</h2>
+      <h2>Organization Tags</h2>
       <label>
         <input type="checkbox" name="mental-health" value="True">
         Mental Health
@@ -52,7 +52,7 @@
     <div class="right-column">
       <!--TODDO: Figure out how to center this john-->
       <div class = "right-column-title">
-      <h2 class = "text-center">Options</h2>
+      <h2 class = "text-center">Additional Options</h2>
       </div>
       <label>
         Time Committment:
@@ -72,11 +72,11 @@
     </label>
       <label>
         Org Name:
-        <input type="text" name="name">
+        <input type="text" name="organization-name">
       </label>
     </div>
     <div class = "bottom-submit">
-    <button type="submit">Submit</button>
+    <button type="submit" name = "submit" value = "complex">Submit</button>
     </div>
   </form>
 </div>
