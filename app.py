@@ -38,24 +38,37 @@ def addorghelper(request):
     orgdesc = ""
     if keychecker(request.form, "organization-description"):
         orgdesc = request.form["organization-description"]
-    time_commitment = ""
-    if keychecker(request.form, "time"):
-        time_commitment = request.form["time"]
-    impact = ""
-    if keychecker(request.form, "impact"):
-        impact = request.form["impact"]
+    CE = ""
+    if keychecker(request.form, "CE"):
+        CE = request.form["CE"]
+    frequency = ""
+    if keychecker(request.form, "frequency"):
+        frequency = request.form["frequency"]
+    location =""
+    if keychecker(request.form, "location"):
+        location = request.form["location"]
+    link = ""
+    if keychecker(request.form, "link"):
+        link = request.form["link"]
+    upvotes = 0
+    if keychecker(request.form, "upvotes"):
+        upvotes = request.form["upvotes"]
+    
     rtndict = {
         #IMPORTANT tags is a list of strings
         "tags" : tags,
         "orgname" : orgname,
         "orgdesc" : orgdesc,
-        "time-commitment" : time_commitment,
-        "impact" : impact
+        "CE" : CE,
+        "frequency" : frequency,
+        "location" : location,
+        "link" : link,
+        "upvotes" : upvotes        
     }
     return rtndict
 #TODO: Clean the next three methods up and combine them?
 def org_tag_applier_helper(taglist, org, tag_string):
-    if org_tag_checker(taglist, tag_string):
+    if tag_string in taglist:
         #get the correct tag
         tag = db_session.query(Tags).where(Tags.name == tag_string).first()
         print(tag)
@@ -71,11 +84,6 @@ def org_tag_applier(taglist, org):
     tagstrings = ["mental-health", "housing", "environment", "addiction-recovery", "elder-care", "food-security", "literacy"]
     for string in tagstrings:
         org_tag_applier_helper(taglist, org, string)
-def org_tag_checker(tags, checkstr):
-    if checkstr in tags:
-        return True
-    else:
-        return False
 
 def create_new_account(proposed_username, proposed_password):
     new_user = User(proposed_username, proposed_password)
@@ -236,4 +244,4 @@ def logout():
 
 if __name__ == "__main__":
     init_db()
-    app.run(host="172.16.1.186", port=5001)
+    app.run(port=5001)

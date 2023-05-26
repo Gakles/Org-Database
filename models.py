@@ -19,25 +19,36 @@ class Organization(Base):
     tags = relationship(
         "Tags", secondary="organization_tag", back_populates="organizations"
     )
-    time_commitment = Column("time_commitment", TEXT, nullable=False)
-    impact = Column("impact", TEXT, nullable=False)
+    CE = Column("CE", TEXT, nullable=False)
+    frequency = Column("frequency", TEXT, nullable=False)
+    location = Column("location", TEXT, nullable=False)
+    link = Column("link", TEXT, nullable=False)
+    upvotes = Column("upvotes", INTEGER, nullable=False)
 
     # Constructor
-    def __init__(self, name, description, time_commitment, impact):
+    def __init__(self, name, description, CE, frequency, location, link):
         self.name = name
         self.description = description
-        self.time_commitment = time_commitment
-        self.impact = impact
+        self.CE = CE
+        self.frequency = frequency
+        self.location = location
+        self.link = link
+        self.upvotes = 0
 
     def __repr__(self):
         return (
             "Organization: "
             + self.name
-            + " with time commitment: "
-            + self.time_commitment
-            + " and impact: "
-            + self.impact
+            + " worth: "
+            + self.CE
+            + " CE credits and located at: "
+            + self.location
         )
+        
+    def upvote(self):
+        self.upvotes += 1
+    def downvote(self):
+        self.upvotes -= 1
 
 
 class Tags(Base):

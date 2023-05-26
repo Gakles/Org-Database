@@ -27,6 +27,7 @@ if db_session.query(Organization).first() is None:
     )
     db_session.add(SVBGC)
     db_session.commit()
+    
     org = db_session.query(Organization).first()
     PawPatrol = Organization(
         "East Bay Paw Patrol",
@@ -35,4 +36,8 @@ if db_session.query(Organization).first() is None:
         "high",
     )
     db_session.add(PawPatrol)
+    db_session.commit()
+    
+    fitkids = Organization("Fit Kids Foundation", "Dedicated to providing physical education to underserved communities", "2+", "Yes", "Menlo Park", "https://fitkids.org")
+    db_session.add(fitkids)
     db_session.commit()

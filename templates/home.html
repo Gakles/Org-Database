@@ -54,24 +54,38 @@
         <h2 class="text-center">Additional Options</h2>
       </div>
       <label>
-        Time Committment:
-        <select name="time">
+        Org Name:
+        <input type="text" name="organization-name" placeholder="Category optional for search">
+      </label>
+      <label>
+        Location:
+        <select name="location">
+          <!--Decide on scope later, most likely by cardinal instead of county. Greater county region?-->
+          <option value="whole_bay">Entire Bay Area</option>          
+          <option value="0-1">Menlo Park</option>
+          <option value="1-2">San Jose</option>
+          <option value="2+">San Fransisco</option>
+        </select>
+      </label>
+      <label>
+        CE Value:
+        <select name="CE">
+          <option value="varies">Varies (Up to volunteer)</option>          
           <option value="0-1">0-1 Hours</option>
           <option value="1-2">1-2 Hours</option>
           <option value="2+">2+ Hours</option>
         </select>
       </label>
       <label>
-        Impact:
-        <select name="impact">
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
+        Frequency:
+        <select name="frequency">
+          <!--One-off and annual might be combined-->
+          <!--Probably should include something(JS in-site popup?) saying one off and annual probable overlap-->
+          <option value="one">One-Off</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="annual">Annual</option>
         </select>
-      </label>
-      <label>
-        Org Name:
-        <input type="text" name="organization-name" placeholder="Category optional for search">
       </label>
     </div>
     <div class="bottom-submit">
