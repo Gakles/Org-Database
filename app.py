@@ -99,15 +99,21 @@ def complexorgsearcher(searchinfo):
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
-    #continue by pruning impact
-    if searchinfo["impact"] != "":
-        orglist = db_session.query(Organization).where(Organization.impact == searchinfo["impact"])
+    #continue by pruning location
+    if searchinfo["location"] != "":
+        orglist = db_session.query(Organization).where(Organization.location == searchinfo["location"])
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
     #prune by time commitment
-    if searchinfo["time-commitment"] != "":
-        orglist = db_session.query(Organization).where(Organization.time_commitment == searchinfo["time-commitment"])
+    if searchinfo["CE"] != "":
+        orglist = db_session.query(Organization).where(Organization.CE == searchinfo["CE"])
+        orglist_ids = [obj.id for obj in orglist]
+        newresults = [obj for obj in results if obj.id in orglist_ids]
+        results = newresults
+    #Prune by frequency
+    if searchinfo["frequency"] != "":
+        orglist = db_session.query(Organization).where(Organization.frequency == searchinfo["frequency"])
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
