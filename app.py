@@ -100,7 +100,7 @@ def complexorgsearcher(searchinfo):
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
     #continue by pruning location
-    if searchinfo["location"] != "":
+    if searchinfo["location"] != "" and searchinfo["location"] != "Whole Bay":
         orglist = db_session.query(Organization).where(Organization.location == searchinfo["location"])
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]

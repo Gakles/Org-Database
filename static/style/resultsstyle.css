@@ -75,3 +75,6 @@ width: 30
 a {
   color:black
 }
+.center-div {
+  position:absolute;
+}
