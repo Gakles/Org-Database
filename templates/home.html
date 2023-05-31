@@ -14,7 +14,6 @@
     </form>
   </div>
 
-  <div class="divider"></div>
   <!--Advanced search-->
   <form class="split-container" method="POST">
     <div class="left-column">
@@ -61,6 +60,7 @@
         Location:
         <select name="location">
           <!--Decide on scope later, most likely by cardinal instead of county. Greater county region?-->
+          <option value=""></option>
           <option value="Whole Bay">Entire Bay Area</option>          
           <option value="Menlo Park">Menlo Park</option>
           <option value="SJ">San Jose</option>
@@ -71,6 +71,7 @@
       <label>
         CE Value:
         <select name="CE">
+          <option value=""></option>
           <option value="Varies">Varies</option>          
           <option value="0-1">0-1 Hours</option>
           <option value="1-2">1-2 Hours</option>
@@ -82,6 +83,7 @@
         <select name="frequency">
           <!--One-off and annual might be combined-->
           <!--Probably should include something(JS in-site popup?) saying one off and annual probable overlap-->
+          <option value=""></option>
           <option value="One">One-Off</option>
           <option value="Weekly">Weekly</option>
           <option value="Monthly">Monthly</option>

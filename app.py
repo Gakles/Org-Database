@@ -111,7 +111,7 @@ def complexorgsearcher(searchinfo):
         orglist_ids = [obj.id for obj in orglist]
         newresults = [obj for obj in results if obj.id in orglist_ids]
         results = newresults
-    #Prune by frequency
+    #prune by frequency
     if searchinfo["frequency"] != "":
         orglist = db_session.query(Organization).where(Organization.frequency == searchinfo["frequency"])
         orglist_ids = [obj.id for obj in orglist]

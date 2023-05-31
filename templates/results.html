@@ -9,12 +9,18 @@
         <div class="scrolldiv">
             {%for organization in orglist%}
             <div class="organization">
-                <h2 class="name">{{organization.name}}</h2>
+                <div class = "maintext">
+                <a class="name" href = {{organization.link}} target="_blank" rel="noopener">{{organization.name}}<a>
                 <p class="description">{{organization.description}}</p>
                 <ul class="info">
-                    <li class="time-commitment">Time commitment: {{organization.time_commitment}}</li>
-                    <li class="impact">Impact: {{organization.impact}}</li>
+                    <li class="info">Frequency: {{organization.frequency}}</li>
+                    <li class="info">CE Value: {{organization.CE}}</li>
+                    <li class ="info">Location: {{organization.location}}</li>
                 </ul>
+                </div>
+                <div class = "votes">
+                    <a class ="info">Votes: {{organization.votes}}</a>
+                </div>
             </div>
             {%endfor%}
         </div>

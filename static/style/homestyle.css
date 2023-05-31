@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    background-color: #9ab6bd;
+    background-color:#0050a0; 
     flex-direction: column; /* add this property to align items vertically */
   }
   
@@ -47,12 +47,14 @@
     cursor: pointer;
   }
   .split-container {
-    height: 100%-10px;
+    height: 100%;
     width: 100%;
-    border-top: 10px solid white;
+    background-color:white;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }  
   
   .left-column {
@@ -60,6 +62,10 @@
     height: 90%;
     padding-right: 5px;
     overflow-y: scroll;
+    color: black;
+    background-color:white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0.1, 0.1, 0.1, 0.1);
   }
   
   .right-column {
@@ -69,7 +75,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
+    color: black;
+    background-color:white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   .centered-btn {
     display: block;
